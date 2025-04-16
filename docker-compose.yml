@@ -1,0 +1,41 @@
+
+# РѕС‡РµРЅСЊ РІР°Р¶РЅС‹ РѕС‚СЃС‚СѓРїС‹ РєР°Рє РІ python
+services:
+  nest_test_postgres:
+    container_name: nest_test_postgres
+    image: postgres:14 # РѕР±СЂР°Р· РґР»СЏ РїРѕСЃС‚СЂРѕРµРЅРёСЏ РЅР°С€РµРіРѕ РєРѕРЅС‚РµР№РЅРµСЂР°
+    environment: # РїРµСЂРµРјРµРЅРЅС‹Рµ РѕРєСЂСѓР¶РµРЅРёСЏ РґР»СЏ РїСЂРѕР±СЂРѕСЃР° РІРЅСѓС‚СЂСЊ РєРѕРЅС‚РµР№РЅРµСЂР°
+      POSTGRES_USER: nest_test # РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+      POSTGRES_PASSWORD: nest_test # РїР°СЂРѕРѕР»СЊ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+      POSTGRES_DB: nest_test
+      PGDATA: /data/postgres
+    volumes: # Р¶РµСЃС‚РєРёР№ РґРёСЃРє РґР»СЏ Р·Р°РїРёСЃРё РґР°РЅРЅС‹С…
+      - postgres:/var/www/nest_test/docker-volumes/postgres # РїСѓС‚СЊ РґР»СЏ Р»РѕРєР°Р»СЊРЅРѕР№ РјР°С€РёРЅС‹
+    ports: # РїСЂРѕР±СЂРѕСЃ РїРѕСЂС‚РѕРІ
+      - "5432:5432"
+    networks:
+      - nest_test
+    restart: unless-stopped
+
+  nest_test_pgadmin:
+    container_name: nest_test_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: nest_test@admin.containername # РЅРµР»СЊР·СЏ РїРёСЃР°С‚СЊ СЃРёРјРІРѕР» "_"
+      PGADMIN_DEFAULT_PASSWORD: nest_test
+      PGADMIN_CONFIG-SERVER_MODE: 'false'
+    volumes:
+      - pgadmin:/var/www/nest_test/docker-volumes/pgadmin
+    ports:
+      - 127.0.0.1:5050:80
+    networks:
+      - nest_test
+    restart: unless-stopped
+
+networks:
+  nest_test:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
