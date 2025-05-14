@@ -26,16 +26,13 @@ export class UserController {
     }
 
     @Post('/')
-    @UseInterceptors(FileInterceptor(''))
+    // @UseInterceptors(FileInterceptor(''))
     async createUser(
-        @Res() req: Request,
-        @Res() res: Response,
         @Body() body: any,
     ){
-        await this.userService.createUser(req.body)
         console.log("---------------Это тело запроса---------------")
-        console.log(req.body)
         console.log(body)
+        return this.userService.createUser(body)
     
     }
 

@@ -14,6 +14,7 @@ import { TypeOrmModule as NestTypeOrmModule } from '@nestjs/typeorm';
             // migrations: ['dist/db/migrations/**/*.js'],
             synchronize: true,
             // cli: { migrationsDir: 'src/db/migrations' },
+            // logging: true,
         }),
     ],
 })
